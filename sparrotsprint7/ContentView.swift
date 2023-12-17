@@ -8,14 +8,58 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var isOpen = true
     var body: some View {
-        Button(action: {
-            
-        }, label: {
-            Label("Sign In", systemImage: "arrowshape.left.fill")
-        }).buttonStyle(.borderedProminent)
+        ZStack{
+            if isOpen {
+                LargeButton()
+                
+                
+            }
+            else {
+                SmallButton()
+            }
+        }
+        
     }
+    
+    func SmallButton()  -> some View {
+        Button(action: {
+            withAnimation {
+                isOpen.toggle()
+            }
+        }, label: {
+            Text("Open")
+                .font(.title)
+                .padding()
+        })
+        .buttonStyle(.borderedProminent)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+    }
+    
+    
+    func LargeButton() -> some View {
+        VStack (alignment: .leading)  {
+            Label("Close", systemImage: "arrowshape.backward.fill")
+                .font(.title)
+                .padding()
+                .onTapGesture {
+                    withAnimation {
+                        isOpen.toggle()
+                    }
+                }
+        }
+        .frame(width: 300, height: 400, alignment: .topLeading)
+        .background(.blue)
+        .cornerRadius(14)
+        .foregroundStyle(.white)
+    }
+    
 }
+
+
+
 
 #Preview {
     ContentView()
