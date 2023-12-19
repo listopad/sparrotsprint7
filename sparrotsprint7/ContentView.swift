@@ -10,50 +10,19 @@ import SwiftUI
 struct ContentView: View {
     
     @State var isOpen = true
+    
     @Namespace var namespace
     var body: some View {
         ZStack{
-
+            
             if isOpen {
-               // LargeButton()
-                TestLargeButton()
+                LargeButton()
             }
             else {
-                //SmallButton()
-                TestSmallButton()
+                SmallButton()
             }
         }
         
-    }
-    
-    func TestSmallButton() -> some View {
-        Button(action: {
-            withAnimation {
-                isOpen.toggle()
-            }
-        }, label: {
-            Label("Open", systemImage: "arrowshape.backward.fill")
-                .matchedGeometryEffect(id: "title", in: namespace)
-
-        })
-        .buttonStyle(.borderedProminent)
-        .matchedGeometryEffect(id: "background", in: namespace)
-    }
-    
-    func TestLargeButton() -> some View {
-        ZStack {
-            Label("Close", systemImage: "")
-                .matchedGeometryEffect(id: "title", in: namespace)
-
-        }
-        .onTapGesture {
-            withAnimation {
-                isOpen.toggle()
-            }
-        }
-        .frame(width: 300, height: 400, alignment: .topLeading)
-        .background(Color.blue)
-        .matchedGeometryEffect(id: "background", in: namespace)
     }
     
     
@@ -63,36 +32,49 @@ struct ContentView: View {
                 isOpen.toggle()
             }
         }, label: {
-            Text("Open")
-                .font(.title)
-                .padding()
-                .matchedGeometryEffect(id: "title", in: namespace)
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundStyle(.blue)
+                .matchedGeometryEffect(id: "background", in: namespace)
+                .frame(width: 100, height: 60)
+                .padding(12)
+                .overlay {
+                    Text("Open")
+                        .matchedGeometryEffect(id: "title",
+                                               in: namespace,
+                                               properties: .position, anchor: .leading)
+                        .foregroundStyle(.white)
+                }
+            
         })
-        .buttonStyle(.borderedProminent)
-        .matchedGeometryEffect(id: "background", in: namespace)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
     }
     
     
     func LargeButton() -> some View {
-        VStack (alignment: .leading)  {
-            Label("Close", systemImage: "arrowshape.backward.fill")
-                .font(.title)
-                .padding()
-                .matchedGeometryEffect(id: "title", in: namespace)
-                .onTapGesture {
-                    withAnimation {
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundStyle(.blue)
+                .matchedGeometryEffect(id: "background", in: namespace)
+                .frame(width: 300, height: 350)
+            
+            VStack {
+                Button(action: {
+                    withAnimation() {
                         isOpen.toggle()
                     }
-                }
+                }, label: {
+                    Group{
+                        Text("\(Image(systemName: "arrowshape.backward.fill")) ") +
+                        Text("Close")
+                    }
+                    .matchedGeometryEffect(id: "title", in: namespace, properties: .position, anchor: .leading)
+                    .foregroundStyle(.white)
+                    .padding(12)
+                })
+                
+            }
         }
-        .frame(width: 300, height: 400, alignment: .topLeading)
-        .background(.blue)
-        .matchedGeometryEffect(id: "background", in: namespace)
-        .cornerRadius(14)
-        .foregroundStyle(.white)
+        
     }
-    
 }
 
 
