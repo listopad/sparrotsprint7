@@ -10,19 +10,52 @@ import SwiftUI
 struct ContentView: View {
     
     @State var isOpen = true
+    @Namespace var namespace
     var body: some View {
         ZStack{
+
             if isOpen {
-                LargeButton()
-                
-                
+               // LargeButton()
+                TestLargeButton()
             }
             else {
-                SmallButton()
+                //SmallButton()
+                TestSmallButton()
             }
         }
         
     }
+    
+    func TestSmallButton() -> some View {
+        Button(action: {
+            withAnimation {
+                isOpen.toggle()
+            }
+        }, label: {
+            Label("Open", systemImage: "arrowshape.backward.fill")
+                .matchedGeometryEffect(id: "title", in: namespace)
+
+        })
+        .buttonStyle(.borderedProminent)
+        .matchedGeometryEffect(id: "background", in: namespace)
+    }
+    
+    func TestLargeButton() -> some View {
+        ZStack {
+            Label("Close", systemImage: "")
+                .matchedGeometryEffect(id: "title", in: namespace)
+
+        }
+        .onTapGesture {
+            withAnimation {
+                isOpen.toggle()
+            }
+        }
+        .frame(width: 300, height: 400, alignment: .topLeading)
+        .background(Color.blue)
+        .matchedGeometryEffect(id: "background", in: namespace)
+    }
+    
     
     func SmallButton()  -> some View {
         Button(action: {
@@ -33,8 +66,10 @@ struct ContentView: View {
             Text("Open")
                 .font(.title)
                 .padding()
+                .matchedGeometryEffect(id: "title", in: namespace)
         })
         .buttonStyle(.borderedProminent)
+        .matchedGeometryEffect(id: "background", in: namespace)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
     }
     
@@ -44,6 +79,7 @@ struct ContentView: View {
             Label("Close", systemImage: "arrowshape.backward.fill")
                 .font(.title)
                 .padding()
+                .matchedGeometryEffect(id: "title", in: namespace)
                 .onTapGesture {
                     withAnimation {
                         isOpen.toggle()
@@ -52,6 +88,7 @@ struct ContentView: View {
         }
         .frame(width: 300, height: 400, alignment: .topLeading)
         .background(.blue)
+        .matchedGeometryEffect(id: "background", in: namespace)
         .cornerRadius(14)
         .foregroundStyle(.white)
     }
