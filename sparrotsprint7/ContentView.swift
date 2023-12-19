@@ -68,7 +68,7 @@ struct ContentView: View {
                 }, label: {
                     Group{
                         Text("\(Image(systemName: "arrowshape.backward.fill")) ") +
-                        Text("Close")
+                        Text("Back")
                     }
                     .matchedGeometryEffect(id: "title", in: namespace, properties: .position, anchor: .leading)
                     .foregroundStyle(.white)
