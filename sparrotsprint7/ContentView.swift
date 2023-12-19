@@ -9,27 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var isOpen = true
+    @State private var isOpen = true
+    @Namespace private var namespace
     
-    @Namespace var namespace
     var body: some View {
         ZStack (alignment: .bottomTrailing){
-            
             if isOpen {
                 LargeButton()
             }
             else {
                 SmallButton()
             }
-        } .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } 
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         
     }
     
     
     func SmallButton()  -> some View {
         ZStack{
-            
-            
             Button(action: {
                 withAnimation {
                     isOpen.toggle()
@@ -79,7 +77,6 @@ struct ContentView: View {
                 
             }
         }
-        
     }
 }
 
