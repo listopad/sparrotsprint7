@@ -13,7 +13,7 @@ struct ContentView: View {
     
     @Namespace var namespace
     var body: some View {
-        ZStack{
+        ZStack (alignment: .bottomTrailing){
             
             if isOpen {
                 LargeButton()
@@ -21,31 +21,37 @@ struct ContentView: View {
             else {
                 SmallButton()
             }
-        }
+        } .frame(maxWidth: .infinity, maxHeight: .infinity)
         
     }
     
     
     func SmallButton()  -> some View {
-        Button(action: {
-            withAnimation {
-                isOpen.toggle()
-            }
-        }, label: {
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundStyle(.blue)
-                .matchedGeometryEffect(id: "background", in: namespace)
-                .frame(width: 100, height: 60)
-                .padding(12)
-                .overlay {
-                    Text("Open")
-                        .matchedGeometryEffect(id: "title",
-                                               in: namespace,
-                                               properties: .position, anchor: .leading)
-                        .foregroundStyle(.white)
-                }
+        ZStack{
             
-        })
+            
+            Button(action: {
+                withAnimation {
+                    isOpen.toggle()
+                }
+            }, label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.blue)
+                    .matchedGeometryEffect(id: "background", in: namespace)
+                    .frame(width: 100, height: 60)
+                    .padding(12)
+                    .overlay {
+                        Text("Open")
+                            .matchedGeometryEffect(id: "title",
+                                                   in: namespace,
+                                                   properties: .position, anchor: .leading)
+                            .foregroundStyle(.white)
+                    }
+                
+            })
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+        .backgroundStyle(.red)
     }
     
     
